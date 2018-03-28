@@ -1,0 +1,11 @@
+{
+  "environment": "production",
+
+  "database": {
+    "dialect": "postgres"
+  },
+
+  "log": {
+    "level": "info"
+  }
+}

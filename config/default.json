@@ -1,0 +1,19 @@
+{
+  "environment": "development",
+
+  "database": {
+    "dialect": "sqlite",
+    "database": "outlay",
+
+    "operatorsAliases": false
+  },
+
+  "log": {
+    "level": "silly",
+    "labels": [
+      "default",
+      "server",
+      "db"
+    ]
+  }
+}

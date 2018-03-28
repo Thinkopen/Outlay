@@ -1,0 +1,7 @@
+{
+  "environment": "certfication",
+
+  "database": {
+    "dialect": "postgres"
+  }
+}

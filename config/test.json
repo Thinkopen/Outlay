@@ -1,0 +1,11 @@
+{
+  "environment": "test",
+
+  "database": {
+    "storage": ":memory:"
+  },
+
+  "log": {
+    "level": "error"
+  }
+}
