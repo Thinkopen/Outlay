@@ -1,0 +1,14 @@
+{
+  "server": {
+    "port": "PORT"
+  },
+
+  "google": {
+    "clientSecret": "GOOGLE_CLIENT_SECRET"
+  },
+
+  "salesforce": {
+    "password": "SALESFORCE_PASSWORD",
+    "token": "SALESFORCE_TOKEN"
+  }
+}

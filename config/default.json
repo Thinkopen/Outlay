@@ -1,6 +1,10 @@
 {
   "environment": "development",
 
+  "server": {
+    "port": 3000
+  },
+
   "database": {
     "dialect": "sqlite",
     "database": "outlay",
@@ -15,5 +19,14 @@
       "server",
       "db"
     ]
+  },
+
+  "google": {
+    "clientSecret": ""
+  },
+
+  "salesforce": {
+    "password": "",
+    "token": ""
   }
 }
