@@ -4,6 +4,7 @@ const path = require('path');
 const config = require('config');
 const morgan = require('morgan');
 const express = require('express');
+const passport = require('passport');
 const bodyParser = require('body-parser');
 
 const AbstractController = require('./controllers');
@@ -35,12 +36,12 @@ class TodoApp {
   }
 
   initMiddlewares() {
-    this.app.use(morgan('dev', {
+    this.app.use(morgan(config.get('server.logFormat'), {
       skip: (req, res) => res.statusCode >= 400,
       stream: { write: message => log.server.info(message) },
     }));
 
-    this.app.use(morgan('dev', {
+    this.app.use(morgan(config.get('server.logFormat'), {
       skip: (req, res) => res.statusCode < 400,
       stream: { write: message => log.server.warn(message) },
     }));
@@ -48,22 +49,47 @@ class TodoApp {
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: false }));
 
+    this.app.use(passport.initialize());
+
+    passport.serializeUser((user, callback) => {
+      callback(null, user);
+    });
+
+    passport.deserializeUser((obj, callback) => {
+      callback(null, obj);
+    });
+
     log.silly('Middlewares initialized');
+  }
+
+  importRoutesFromDirectory(controllersDir, basePath, firstImport = false) {
+    const folderPath = path.join(controllersDir, basePath);
+
+    fs
+      .readdirSync(folderPath)
+      .filter(filename => !firstImport || filename !== 'index.js')
+      .forEach((filename) => {
+        const filePath = path.join(folderPath, filename);
+        const urlPath = `${basePath}/${filename.replace('.js', '')}`;
+
+        if (fs.statSync(filePath).isDirectory()) {
+          this.importRoutesFromDirectory(controllersDir, urlPath);
+
+          return;
+        }
+
+        const controllerFile = path.join(folderPath, filename);
+        // eslint-disable-next-line global-require, import/no-dynamic-require
+        const Controller = require(controllerFile);
+
+        this.app.use(urlPath, new Controller().router);
+      });
   }
 
   initRoutes() {
     const controllersDir = path.join(__dirname, 'controllers');
 
-    fs
-      .readdirSync(controllersDir)
-      .filter(filename => filename !== 'index.js' && filename.substr(-3) === '.js')
-      .forEach((filename) => {
-        const controllerFile = path.join(controllersDir, filename);
-        // eslint-disable-next-line global-require, import/no-dynamic-require
-        const Controller = require(controllerFile);
-
-        this.app.use('/', new Controller().router);
-      });
+    this.importRoutesFromDirectory(controllersDir, '', true);
 
     this.app.use(AbstractController.handle404);
     this.app.use(AbstractController.handle500);

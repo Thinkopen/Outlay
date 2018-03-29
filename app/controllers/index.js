@@ -19,12 +19,10 @@ class AbstractController {
   promisifyMiddlewares() {
     this.router.stack.forEach(({ route }) => {
       route.stack.forEach((stack) => {
-        if (stack.handle.constructor.name === 'AsyncFunction') {
-          const oldHandle = stack.handle;
+        const oldHandle = stack.handle;
 
-          // eslint-disable-next-line no-param-reassign
-          stack.handle = AbstractController.wrapPromise(oldHandle);
-        }
+        // eslint-disable-next-line no-param-reassign
+        stack.handle = stack.handle.constructor.name === 'AsyncFunction' ? AbstractController.wrapPromise(oldHandle) : AbstractController.wrapTryCatch(oldHandle);
       });
     });
   }
@@ -33,6 +31,16 @@ class AbstractController {
     return (request, response, next) => {
       middleware(request, response, next)
         .catch(next);
+    };
+  }
+
+  static wrapTryCatch(middleware) {
+    return (request, response, next) => {
+      try {
+        middleware(request, response, next);
+      } catch (error) {
+        next(error);
+      }
     };
   }
 

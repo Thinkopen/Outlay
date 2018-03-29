@@ -1,6 +1,11 @@
 {
   "environment": "production",
 
+  "server": {
+    "logFormat": "combined",
+    "baseUrl": "https://top-outlay.herokuapp.com"
+  },
+
   "database": {
     "dialect": "postgres"
   },

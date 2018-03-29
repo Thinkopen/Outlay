@@ -2,7 +2,9 @@
   "environment": "development",
 
   "server": {
-    "port": 3000
+    "logFormat": "dev",
+    "port": 3000,
+    "baseUrl": "http://localhost:3000"
   },
 
   "database": {
@@ -22,7 +24,9 @@
   },
 
   "google": {
-    "clientSecret": ""
+    "clientId": "420447536301-kaf5q6gtkkb4v2fu7gnj9c16hmcvflbu.apps.googleusercontent.com",
+    "clientSecret": "",
+    "callbackUrl": "/auth/google/callback"
   },
 
   "salesforce": {

@@ -1,0 +1,12 @@
+{
+  "environment": "staging",
+
+  "server": {
+    "logFormat": "combined",
+    "baseUrl": "https://top-outlay-staging.herokuapp.com"
+  },
+
+  "database": {
+    "dialect": "postgres"
+  }
+}
