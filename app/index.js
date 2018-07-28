@@ -1,6 +1,7 @@
 const fs = require('fs');
 const http = require('http');
 const path = require('path');
+const cons = require('consolidate');
 const config = require('config');
 const morgan = require('morgan');
 const express = require('express');
@@ -12,7 +13,7 @@ const AbstractController = require('./controllers');
 const { sync } = require('./libraries/db');
 const log = require('./libraries/log');
 
-class TodoApp {
+class App {
   constructor() {
     this.config = config.get('server');
 
@@ -25,9 +26,9 @@ class TodoApp {
     this.app = express();
     this.server = http.Server(this.app);
 
-    this.server.on('error', error => TodoApp.handleServerError(error));
+    this.server.on('error', error => App.handleServerError(error));
 
-    log.silly('Server initialized');
+    log.verbose('Server initialized');
   }
 
   static handleServerError(error) {
@@ -36,6 +37,12 @@ class TodoApp {
   }
 
   initMiddlewares() {
+    this.app.engine('html',cons.swig);
+    this.app.set('views', path.join(__dirname, '../public/views'));
+    this.app.set('view engine', 'html');
+    //Alternative view engine
+    //this.app.set('view engine', 'ejs');
+
     this.app.use(morgan(config.get('server.logFormat'), {
       skip: (req, res) => res.statusCode >= 400,
       stream: { write: message => log.server.info(message) },
@@ -59,7 +66,7 @@ class TodoApp {
       callback(null, obj);
     });
 
-    log.silly('Middlewares initialized');
+    log.verbose('Middlewares initialized');
   }
 
   importRoutesFromDirectory(controllersDir, basePath, firstImport = false) {
@@ -89,17 +96,29 @@ class TodoApp {
   initRoutes() {
     const controllersDir = path.join(__dirname, 'controllers');
 
-    this.importRoutesFromDirectory(controllersDir, '', true);
+    //this.importRoutesFromDirectory(controllersDir, '', true);
 
+    fs
+      .readdirSync(controllersDir)
+      .filter(filename => filename !== 'index.js' && filename.substr(-3) === '.js')
+      .forEach((filename) => {
+        const controllerFile = path.join(controllersDir, filename);
+        // eslint-disable-next-line global-require, import/no-dynamic-require
+        const Controller = require(controllerFile);
+
+        this.app.use('/', new Controller().router);
+      });
+
+    this.app.use(express.static(path.join(__dirname, '..', 'public')));
     this.app.use(AbstractController.handle404);
     this.app.use(AbstractController.handle500);
 
-    log.silly('Routes initialized');
+    log.verbose('Routes initialized');
   }
 
   async listen() {
     await sync();
-    log.silly('Database synced');
+    log.verbose('Database synced');
 
     await new Promise((resolve, reject) =>
       this.server.listen(this.config.port, err => (err ? reject(err) : resolve())));
@@ -113,4 +132,4 @@ class TodoApp {
   }
 }
 
-module.exports = TodoApp;
+module.exports = App;

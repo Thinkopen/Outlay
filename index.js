@@ -1,4 +1,4 @@
-const OutlayApp = require('./app');
+const OutlayApp = require('./app/index');
 
 const log = require('./app/libraries/log');
 
