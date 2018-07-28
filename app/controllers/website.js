@@ -11,7 +11,7 @@ class WebsiteController extends AbstractController {
 
 
     static renderIndex(req,res){
-        res.render('index',{ client: '', signedRequest: '',from: ''});
+        res.send({ username: 'TeoxverT'});
     }
 
 

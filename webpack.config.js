@@ -1,8 +1,18 @@
+const path = require('path');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
+
 module.exports = {
+    entry: {
+
+        bundle : path.join(__dirname,'public/index.js'),
+        vendor : ['jquery, bootstrap, react-bootstrap'],
+    }, 
     output: {
-        publicPath: '/'
+        
+        path: path.join(__dirname,'public/dist'),
+        filename: '[name].js'
     },
     module: {
         rules: [
@@ -68,8 +78,14 @@ module.exports = {
     },
     devServer: {
         historyApiFallback: true,
+        
+        port: 3000,
+        open: true,
+        proxy: {
+            "/api": "http://localhost:8080"
+        },
     },
-    plugins: [
+   /* plugins: [
         new HtmlWebPackPlugin({
             template: "./public/views/index.html",
             filename: "./public/views/index.html"
@@ -78,5 +94,5 @@ module.exports = {
             filename: "[name].css",
             chunkFilename: "[id].css"
         })
-    ]
+    ]*/
 };
