@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import Login from './Login';
+import Footer from './Footer';
+
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { username: null };
   }
 
   componentDidMount() {
@@ -14,9 +16,12 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-       Its a react-express app! {this.state.username}
-      </div>
+      
+
+        <Footer>
+
+        </Footer>
+      
     );
   }
 }

@@ -37,11 +37,12 @@ class App {
   }
 
   initMiddlewares() {
-    this.app.engine('html',cons.swig);
+    
     this.app.set('views', path.join(__dirname, '../public/views'));
-    this.app.set('view engine', 'html');
+    //this.app.set('view engine', 'html');
+    //this.app.engine('html',cons.swig);
     //Alternative view engine
-    //this.app.set('view engine', 'ejs');
+    this.app.set('view engine', 'ejs');
 
     this.app.use(morgan(config.get('server.logFormat'), {
       skip: (req, res) => res.statusCode >= 400,

@@ -9,7 +9,7 @@ const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 module.exports = {
     entry: {
 
-        bundle : [path.join(publicDir,'index.js'),path.join(stylesDir,'main.scss')],
+        bundle : [path.join(publicDir,'index.js'),path.join(publicDir,'components/Footer.js'),path.join(stylesDir,'main.scss')],
         vendor : ['jquery','bootstrap','react-bootstrap'],
     }, 
     output: {

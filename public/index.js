@@ -5,9 +5,7 @@ import {BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(
-	  <App>
-		
-	  </App>
+	  <App> </App>
    
 ,document.getElementById('root'));
 
