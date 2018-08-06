@@ -66,3 +66,7 @@ typings/
 yarn\.lock
 
 \.vscode/
+
+public/dist/
+
+package-lock\.json

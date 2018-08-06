@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 
-
-
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -18,7 +15,7 @@ class App extends Component {
   render() {
     return (
       <div>
-       Its a react app! {this.state.username}
+       Its a react-express app! {this.state.username}
       </div>
     );
   }

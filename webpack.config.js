@@ -1,18 +1,24 @@
 const path = require('path');
-const HtmlWebPackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const webpack = require('webpack');
 
+const publicDir = path.join(__dirname, 'public');
+const stylesDir = path.join(publicDir,'styles')
+
+const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 
 module.exports = {
     entry: {
 
-        bundle : path.join(__dirname,'public/index.js'),
-        vendor : ['jquery, bootstrap, react-bootstrap'],
+        bundle : [path.join(publicDir,'index.js'),path.join(stylesDir,'main.scss')],
+        vendor : ['jquery','bootstrap','react-bootstrap'],
     }, 
     output: {
         
         path: path.join(__dirname,'public/dist'),
         filename: '[name].js'
+    },
+    resolve : {
+        extensions: ['.js', '.jsx'],
     },
     module: {
         rules: [
@@ -76,7 +82,7 @@ module.exports = {
             }
         ]
     },
-    devServer: {
+   /* devServer: {
         historyApiFallback: true,
         
         port: 3000,
@@ -84,15 +90,40 @@ module.exports = {
         proxy: {
             "/api": "http://localhost:8080"
         },
-    },
-   /* plugins: [
-        new HtmlWebPackPlugin({
-            template: "./public/views/index.html",
-            filename: "./public/views/index.html"
-        }),
-        new MiniCssExtractPlugin({
-            filename: "[name].css",
-            chunkFilename: "[id].css"
-        })
-    ]*/
+    },*/
+    optimization: {
+        splitChunks: {
+          chunks: 'async',
+          minSize: 30000,
+          maxSize: 0,
+          minChunks: 1,
+          maxAsyncRequests: 5,
+          maxInitialRequests: 3,
+          automaticNameDelimiter: '~',
+          name: true,
+          cacheGroups: {
+            vendors: {
+              test: /[\\/]node_modules[\\/]/,
+              priority: -10
+            },
+            default: {
+              minChunks: 2,
+              priority: -20,
+              reuseExistingChunk: true
+            }
+          }
+        }
+      },
+    plugins: [
+        new webpack.ProvidePlugin({ // inject ES5 modules as global vars
+            $: 'jquery',
+            jQuery: 'jquery',
+            'window.jQuery': 'jquery',
+            Popper: ['popper.js', 'default'],
+          }),
+          new WebpackCleanupPlugin(),
+         /* new optimization.splitChunks({ // seperate vendor chunks , TODO implement split chunks config
+            name: ['vendor'],
+          }),*/
+    ]
 };
