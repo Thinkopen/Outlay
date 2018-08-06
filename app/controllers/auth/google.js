@@ -4,7 +4,7 @@ const passport = require('passport');
 const googleAuth = require('../../libraries/googleAuth');
 const AbstractController = require('..');
 
-module.exports = class AuthController extends AbstractController {
+class AuthController extends AbstractController {
   initRouter() {
     passport.use(googleAuth.strategy);
 
@@ -44,3 +44,5 @@ module.exports = class AuthController extends AbstractController {
     });
   }
 };
+
+module.exports = AuthController;
