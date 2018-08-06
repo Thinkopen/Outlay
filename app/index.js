@@ -1,10 +1,10 @@
 const fs = require('fs');
 const http = require('http');
 const path = require('path');
-const cons = require('consolidate');
 const config = require('config');
 const morgan = require('morgan');
 const express = require('express');
+const cons = require('consolidate');
 const passport = require('passport');
 const bodyParser = require('body-parser');
 
