@@ -94,7 +94,7 @@ module.exports = {
     optimization: {
         splitChunks: {
           chunks: 'async',
-          minSize: 30000,
+          minSize: 25000,
           maxSize: 0,
           minChunks: 1,
           maxAsyncRequests: 5,
@@ -122,8 +122,5 @@ module.exports = {
             Popper: ['popper.js', 'default'],
           }),
           new WebpackCleanupPlugin(),
-         /* new optimization.splitChunks({ // seperate vendor chunks , TODO implement split chunks config
-            name: ['vendor'],
-          }),*/
     ]
 };

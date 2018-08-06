@@ -10,9 +10,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "eslint": "eslint .",
-    "heroku-postbuild": "webpack",
+    "heroku-postbuild": "webpack --mode production",
     "start": "node index.js",
-    "build": "webpack"
+    "build": "webpack --mode development"
   },
   "keywords": [
     "node.js",
