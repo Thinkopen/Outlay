@@ -14,7 +14,8 @@ class Login extends Component {
 
         return (
         <div>
-            <Button bsStyle="success">Login</Button>
+            <div className="login-text"> Login with a Google account </div>
+            <button className="btn btn-success">Login </button>
             <Footer />
         </div>
         );

@@ -97,8 +97,8 @@ class App {
   initRoutes() {
     const controllersDir = path.join(__dirname, 'controllers');
 
-    //this.importRoutesFromDirectory(controllersDir, '', true); //TODO update root Route with google auth
-
+    //this.importRoutesFromDirectory(controllersDir, '', true); 
+    
     fs
       .readdirSync(controllersDir)
       .filter(filename => filename !== 'index.js' && filename.substr(-3) === '.js')

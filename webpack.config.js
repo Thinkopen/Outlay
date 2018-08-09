@@ -11,7 +11,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 
 const entry = {
-    bundle : [path.join(publicDir,'index.js'),path.join(stylesDir,'main.scss')],
+    bundle : [path.join(publicDir,'index.js'),path.join(stylesDir,'scss/main.scss')],
     vendor : ['jquery','bootstrap','react-bootstrap'],
   };
 
