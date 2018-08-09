@@ -1,17 +1,23 @@
+const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
 
 const publicDir = path.join(__dirname, 'public');
-const stylesDir = path.join(publicDir,'styles')
+const stylesDir = path.join(publicDir,'styles');
+const componentsDir = path.join(publicDir,'components');
 
 const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+
+const entry = {
+    bundle : [path.join(publicDir,'index.js'),path.join(stylesDir,'main.scss')],
+    vendor : ['jquery','bootstrap','react-bootstrap'],
+  };
+
 
 module.exports = {
-    entry: {
-
-        bundle : [path.join(publicDir,'index.js'),path.join(publicDir,'components/Footer.js'),path.join(stylesDir,'main.scss')],
-        vendor : ['jquery','bootstrap','react-bootstrap'],
-    }, 
+    entry,
     output: {
         
         path: path.join(__dirname,'public/dist'),
@@ -121,6 +127,10 @@ module.exports = {
             'window.jQuery': 'jquery',
             Popper: ['popper.js', 'default'],
           }),
+         /* new ExtractTextPlugin({
+                filename: '[name].css',
+                allChunks: true,
+          }),*/
           new WebpackCleanupPlugin(),
     ]
 };

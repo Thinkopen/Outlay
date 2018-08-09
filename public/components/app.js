@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import Login from './Login';
-import Footer from './Footer';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import Login from './login';
+import Footer from './footer';
 
 
 class App extends Component {
@@ -8,20 +9,14 @@ class App extends Component {
     super(props);
   }
 
-  componentDidMount() {
-    fetch("/")
-      .then(res => res.json())
-      .then(user => this.setState({ username: user.username }));
-  }
-
   render() {
-    return (
-      
-
-        <Footer>
-
-        </Footer>
-      
+    return (      
+      <BrowserRouter> 
+        <div>             
+          <Route path="/" component={Login} exact />
+        </div>    
+      </BrowserRouter>  
+     
     );
   }
 }

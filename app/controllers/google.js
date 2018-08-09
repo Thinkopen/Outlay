@@ -1,15 +1,15 @@
 const config = require('config');
 const passport = require('passport');
 
-const googleAuth = require('../../libraries/googleAuth');
-const AbstractController = require('..');
+const googleAuth = require('../libraries/googleAuth');
+const AbstractController = require('.');
 
 class AuthController extends AbstractController {
   initRouter() {
     passport.use(googleAuth.strategy);
 
-    this.router.get('/', passport.authenticate('google', { scope: googleAuth.scopes }));
-    this.router.get(config.get('google.callbackUrl').replace('/auth/google', ''), passport.authenticate('google', { failureRedirect: '/' }), (req, res) => AuthController.handleLogged(req, res));
+    this.router.post('/googleauth', passport.authenticate('google', { scope: googleAuth.scopes }));
+    this.router.post(config.get('google.callbackUrl').replace('/auth/google', ''), passport.authenticate('google', { failureRedirect: '/' }), (req, res) => AuthController.handleLogged(req, res));
   }
 
   static handleLogged(req, res) {
