@@ -11,7 +11,7 @@ render() {
 
     return(
     <footer>
-        <p className="login-text"> Copyright © 2014 Thinkopen S.r.l. Via F.Sampietro 8, 27026 Garlasco (PV) – P.IVA: 02396900181. All Rights Reserved. </p>
+        <p className="login-text footer"> Copyright © 2014 Thinkopen S.r.l. Via F.Sampietro 8, 27026 Garlasco (PV) – P.IVA: 02396900181. All Rights Reserved. </p>
     </footer>
 
     );

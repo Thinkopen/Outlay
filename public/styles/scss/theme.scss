@@ -1,6 +1,45 @@
 
 .login-text {
 
-  color: #0f375d;
+  color: #0f4374;
+  margin: 10px;
+  text-align: center;
+  box-shadow: 0 2 2 0 #0f375d;
+  font-size: 14px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.login-button {
+
+  top: 50%;
+}
+
+.login-logo {
+
+  width: auto;
+  height: auto;
+  margin : 20px;
+  opacity: 1;
+  transition: opacity ease-out 1s;
+}
+
+.login-logo:hover {
+
+  opacity: 0.5;
+}
+
+.login-wrapper {
+  text-align: center;
+}
+
+.button {
+  position: absolute;
+  top: 50%;
+}
+
+.footer {
+
+  position: relative;
+  margin: 20px;
 }
 
